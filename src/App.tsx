@@ -9,29 +9,31 @@ import { BACKGROUNDS } from './constants';
 
 const STORAGE_KEY = 'scrapbook_diary_v3';
 
+const INITIAL_PAGES: ScrapbookPage[] = [
+  {
+    id: '1',
+    background: BACKGROUNDS[0].url,
+    elements: [
+      {
+        id: 'initial-note',
+        type: 'text',
+        content: 'Doppio-tocco per scrivere i tuoi pensieri...',
+        x: 100,
+        y: 200,
+        rotation: -3,
+        scale: 1,
+        zIndex: 1,
+        style: { fontFamily: "'Caveat', cursive", fontSize: 24, paperType: 'sticky' }
+      }
+    ]
+  }
+];
+
 export default function App() {
   const [pages, setPages] = useState<ScrapbookPage[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) return JSON.parse(saved);
-    return [
-      {
-        id: '1',
-        background: BACKGROUNDS[0].url,
-        elements: [
-          {
-            id: 'initial-note',
-            type: 'text',
-            content: 'Doppio-tocco per scrivere i tuoi pensieri...',
-            x: 100,
-            y: 100,
-            rotation: -3,
-            scale: 1,
-            zIndex: 1,
-            style: { fontFamily: "'Caveat', cursive", fontSize: 24, paperType: 'sticky' }
-          }
-        ]
-      }
-    ];
+    return INITIAL_PAGES;
   });
   
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -259,6 +261,23 @@ export default function App() {
     updateElement(selectedElementId, { filter });
   };
 
+  const resetProject = () => {
+    if (window.confirm('🚨 RESET TOTALE: Sei sicuro di voler cancellare TUTTO il diario?')) {
+      setPages(INITIAL_PAGES);
+      setCurrentPageIndex(0);
+      setSelectedElementId(null);
+    }
+  };
+
+  const clearCurrentPage = () => {
+    if (window.confirm('🧹 CLEAR PAGE: Rimuovere tutti gli elementi da questa pagina?')) {
+      const newPages = [...pages];
+      newPages[currentPageIndex].elements = [];
+      setPages(newPages);
+      setSelectedElementId(null);
+    }
+  };
+
   const handleStartEdit = (element: ScrapbookElement) => {
     if (element.type === 'text') {
       setIsEditingTextId(element.id);
@@ -297,6 +316,21 @@ export default function App() {
             className="hover:text-amber-600 transition-colors hidden sm:block font-bold"
           >
             Disordine
+          </button>
+          <div className="w-[1px] h-4 bg-black/10 hidden sm:block" />
+          <button 
+            onClick={clearCurrentPage}
+            className="hover:text-red-500 transition-colors hidden sm:block font-bold"
+            title="Pulisci Pagina Corrente"
+          >
+            Pulisci
+          </button>
+          <button 
+            onClick={resetProject}
+            className="hover:text-red-600 transition-colors hidden sm:block font-bold text-black/30"
+            title="Reset Totale"
+          >
+            Reset
           </button>
           <div className="w-[1px] h-4 bg-black/10 hidden sm:block" />
           <button 
