@@ -188,7 +188,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                     </button>
                   );
                 })}
-                {['✨', '🌸', '☕️', '📷', '📓', '🌿', '🍂', '🦋', '🌙', '☀️', '📌', '📎'].map(emoji => (
+                {['✨', '🌸', '☕️', '📷', '📓', '🌿', '🍂', '🦋', '🌙', '☀️', '📌', '📎', '😂', '🥰', '😱', '💤', '❤', '🫶'].map(emoji => (
                   <button 
                     key={emoji} 
                     onClick={() => onAddEmoji(emoji)}
