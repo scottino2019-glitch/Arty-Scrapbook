@@ -12,7 +12,7 @@ export const BACKGROUNDS = [
   { id: 'indigo', name: 'Indigo Shibori', url: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&q=80&w=1200' },
   { id: 'watercolor', name: 'Muted Watercolor', url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=1200' },
   { id: 'linen-light', name: 'Woven Linen', url: 'https://images.unsplash.com/photo-1528459801416-a7e99a0d6326?auto=format&fit=crop&q=80&w=1200' },
-  { id: 'handmade', name: 'Handmade Fiber', url: 'https://images.unsplash.com/photo-1586075010633-2445c9ffabb2?auto=format&fit=crop&q=80&w=1200' },
+  { id: 'handmade', name: 'Handmade Fiber', url: 'https://images.unsplash.com/photo-1737276745714-72fe9d14b427?q=80&w=1297&auto=format&fit=crop&q=80&w=120' },
 ];
 
 export const STICKERS = [
