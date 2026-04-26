@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Caveat:wght@400;700&family=Shadows+Into+Light&family=Special+Elite&family=Patrick+Hand&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-hand: "Caveat", cursive;
+  --font-artsy: "Shadows Into Light", cursive;
+  --font-typewriter: "Special Elite", system-ui;
+  --font-casual: "Patrick Hand", cursive;
+  --font-sans: "Inter", sans-serif;
+
+  --color-brand-bg: #e8e4d9;
+  --color-canvas-bg: #faf9f6;
+  --color-ui-bg: #fdfbf7;
+  --color-ui-text: #2c2c2c;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-bg text-ui-text font-serif;
+    background-image: radial-gradient(#000 0.5px, transparent 0.5px);
+    background-size: 10px 10px;
+    background-attachment: fixed;
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-stone-300 rounded-full hover:bg-stone-400;
+}
+
