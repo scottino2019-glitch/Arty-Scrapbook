@@ -85,6 +85,49 @@ export const DraggableElement: React.FC<Props> = ({
              <Icon size={64} style={{ color: stickerColor, fill: `${stickerColor}33` }} />
           </div>
         );
+      case 'bubble':
+        const bubbleType = element.style?.bubbleType || 'speech';
+        const bubbleBg = element.style?.backgroundColor || '#ffffff';
+        const bubbleColor = element.style?.color || '#000000';
+        
+        return (
+          <div 
+            className="relative flex items-center justify-center p-8 min-w-[120px] min-h-[100px]"
+            style={{ 
+              fontFamily: element.style?.fontFamily,
+              fontSize: element.style?.fontSize,
+              color: bubbleColor,
+              filter: element.filter
+            }}
+          >
+            <svg 
+              className="absolute inset-0 w-full h-full -z-10 drop-shadow-lg" 
+              viewBox="0 0 200 200" 
+              preserveAspectRatio="none"
+              fill={bubbleBg}
+              stroke={bubbleColor}
+              strokeWidth="2"
+            >
+              {bubbleType === 'speech' && (
+                <path d="M10,10 L190,10 L190,150 L120,150 L100,190 L80,150 L10,150 Z" />
+              )}
+              {bubbleType === 'thought' && (
+                <g>
+                  <path d="M100,20 C140,20 180,40 180,80 C180,120 140,140 100,140 C80,140 60,135 40,125 C20,115 10,95 20,70 C30,45 60,20 100,20 Z" />
+                  <circle cx="50" cy="165" r="8" />
+                  <circle cx="35" cy="185" r="5" />
+                </g>
+              )}
+              {bubbleType === 'burst' && (
+                <path d="M10,100 L40,60 L20,20 L70,40 L100,10 L130,40 L180,20 L160,60 L190,100 L160,140 L180,180 L130,160 L100,190 L70,160 L20,180 L40,140 Z" />
+              )}
+              {bubbleType === 'cloud' && (
+                <path d="M50,150 C20,150 0,130 0,100 C0,70 20,50 50,50 C50,20 80,0 120,0 C160,0 190,25 200,60 C220,60 240,80 240,110 C240,140 220,160 190,160 L50,160 Z" transform="scale(0.8) translate(10, 20)" />
+              )}
+            </svg>
+            <p className="relative z-10 text-center whitespace-pre-wrap break-words max-w-[150px]">{element.content}</p>
+          </div>
+        );
       case 'emoji':
         return (
           <div className="text-6xl drop-shadow-md select-none p-2" style={{ filter: element.filter }}>

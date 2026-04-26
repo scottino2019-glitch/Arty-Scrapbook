@@ -279,7 +279,7 @@ export default function App() {
   };
 
   const handleStartEdit = (element: ScrapbookElement) => {
-    if (element.type === 'text') {
+    if (element.type === 'text' || element.type === 'bubble') {
       setIsEditingTextId(element.id);
       setEditValue(element.content);
     }
@@ -351,6 +351,7 @@ export default function App() {
         <Toolbar 
           onBackgroundChange={handleBackgroundChange}
           onAddText={(font, color, type) => addElement('text', 'Scrivi un pensiero...', { fontFamily: font, color, fontSize: 24, paperType: type })}
+          onAddBubble={(font, color, type) => addElement('bubble', 'Dì qualcosa...', { fontFamily: font, color, fontSize: 18, bubbleType: type })}
           onAddPhoto={(url) => addElement('photo', url)}
           onAddSticker={(name) => addElement('sticker', name)}
           onAddEmoji={(emoji) => addElement('emoji', emoji)}

@@ -1,4 +1,4 @@
-export type ElementType = 'text' | 'photo' | 'sticker' | 'emoji';
+export type ElementType = 'text' | 'photo' | 'sticker' | 'emoji' | 'bubble';
 
 export interface ScrapbookElement {
   id: string;
@@ -15,6 +15,7 @@ export interface ScrapbookElement {
     fontSize?: number;
     color?: string;
     paperType?: 'plain' | 'torn' | 'sticky' | 'lined' | 'envelope';
+    bubbleType?: 'speech' | 'thought' | 'burst' | 'cloud';
     backgroundColor?: string;
     width?: number;
     height?: number;

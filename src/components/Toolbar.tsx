@@ -6,6 +6,7 @@ import * as LucideIcons from 'lucide-react';
 
 interface ToolbarProps {
   onAddText: (font: string, color: string, type: string) => void;
+  onAddBubble: (font: string, color: string, type: 'speech' | 'thought' | 'burst' | 'cloud') => void;
   onAddPhoto: (url: string) => void;
   onAddSticker: (name: string) => void;
   onAddEmoji: (emoji: string) => void;
@@ -15,13 +16,14 @@ interface ToolbarProps {
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({ 
-  onAddText, onAddPhoto, onAddSticker, onAddEmoji, 
+  onAddText, onAddBubble, onAddPhoto, onAddSticker, onAddEmoji, 
   onBackgroundChange, onApplyLayout, onApplyFilter
 }) => {
-  const [activeTab, setActiveTab] = useState<'text' | 'media' | 'stickers' | 'background' | 'layout' | null>(null);
+  const [activeTab, setActiveTab] = useState<'text' | 'bubbles' | 'media' | 'stickers' | 'background' | 'layout' | null>(null);
   const [selectedFont, setSelectedFont] = useState(FONTS[0].value);
   const [selectedColor, setSelectedColor] = useState(COLORS[0]);
   const [selectedPaper, setSelectedPaper] = useState<'plain' | 'torn' | 'sticky' | 'lined' | 'envelope'>('plain');
+  const [selectedBubble, setSelectedBubble] = useState<'speech' | 'thought' | 'burst' | 'cloud'>('speech');
   const [imageUrl, setImageUrl] = useState('');
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +92,48 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             </button>
           </div>
         );
+      case 'bubbles':
+        return (
+          <div className="space-y-6">
+            <div>
+              <label className="text-[10px] font-bold uppercase text-stone-400 mb-3 block tracking-widest">Forma Fumetto</label>
+              <div className="grid grid-cols-2 gap-2">
+                {['speech', 'thought', 'burst', 'cloud'].map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => setSelectedBubble(type as any)}
+                    className={`px-2 py-2 text-[10px] font-sans font-bold border rounded uppercase tracking-tighter transition-all 
+                      ${selectedBubble === type ? 'bg-black text-white border-black shadow-lg translate-y-[-1px]' : 'bg-white border-stone-200 hover:border-black/30'}`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="text-[10px] font-bold uppercase text-stone-400 mb-3 block tracking-widest">Tipografia</label>
+              <div className="grid grid-cols-1 gap-2">
+                {FONTS.map((font) => (
+                  <button
+                    key={font.name}
+                    onClick={() => setSelectedFont(font.value)}
+                    className={`px-3 py-3 text-sm border rounded text-left transition-all truncate
+                      ${selectedFont === font.value ? 'bg-black text-white border-black' : 'bg-white border-stone-200 hover:border-black/30'}`}
+                    style={{ fontFamily: font.value }}
+                  >
+                    {font.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button
+              onClick={() => onAddBubble(selectedFont, selectedColor, selectedBubble)}
+              className="w-full bg-stone-900 h-14 text-white rounded-lg font-sans text-xs font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-black transition-all shadow-xl active:scale-95"
+            >
+              <Plus size={16} /> Inserisci Fumetto
+            </button>
+          </div>
+        );
       case 'media':
         return (
           <div className="space-y-6">
@@ -144,7 +188,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                     </button>
                   );
                 })}
-                {['✨', '🌸', '☕️', '📷', '📓', '🌿', '🍂', '🦋', '🌙', '☀️', '📌', '📎', '😂', '🥰', '😱', '💤', '❤', '🫶'].map(emoji => (
+                {['✨', '🌸', '☕️', '📷', '📓', '🌿', '🍂', '🦋', '🌙', '☀️', '📌', '📎'].map(emoji => (
                   <button 
                     key={emoji} 
                     onClick={() => onAddEmoji(emoji)}
@@ -244,6 +288,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
   const navItems = [
     { id: 'text', icon: Type, label: 'Note' },
+    { id: 'bubbles', icon: LucideIcons.MessageCircle, label: 'Bolle' },
     { id: 'media', icon: ImageIcon, label: 'Foto' },
     { id: 'stickers', icon: Sticker, label: 'Decal' },
     { id: 'layout', icon: Layout, label: 'Layout' },
